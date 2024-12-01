@@ -1,0 +1,10 @@
+<% layouts('layouts/main') %>
+<h1>Список учебных заведений</h1>
+<ul>
+    <% institutions.forEach(inst => { %>
+        <li>
+            <a href="/institution/<%= inst.id %>"><%= inst.name %></a>
+            <p><%= inst.description %></p>
+        </li>
+    <% }); %>
+</ul>

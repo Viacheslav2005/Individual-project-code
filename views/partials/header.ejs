@@ -1,0 +1,17 @@
+<header>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <% if (!user) { %>
+                <li><a href="/auth/login">Вход</a></li>
+                <li><a href="/auth/register">Регистрация</a></li>
+            <% } else { %>
+                <li><a href="/profile">Профиль</a></li>
+                <% if (user.role === 'admin') { %>
+                    <li><a href="/admin">Админ панель</a></li>
+                <% } %>
+                <li><a href="/auth/logout">Выход</a></li>
+            <% } %>
+        </ul>
+    </nav>
+</header>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= title || 'Мое приложение' %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Подключаем header -->
+    <%- include('../partials/header', { user: user }) %>
+
+    <!-- Основной контент -->
+    <main>
+        <%- body %>
+    </main>
+
+    <!-- Подключаем footer -->
+    <%- include('../partials/footer') %>
+</body>
+</html>

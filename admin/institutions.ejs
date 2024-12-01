@@ -1,0 +1,21 @@
+<h1>Управление заведениями</h1>
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Действия</th>
+    </tr>
+    <% institutions.forEach(inst => { %>
+    <tr>
+        <td><%= inst.name %></td>
+        <td>
+            <form method="POST" action="/admin/institutions/delete/<%= inst.id %>">
+                <button type="submit">Удалить</button>
+            </form>
+            <form method="POST" action="/admin/institutions/edit/<%= inst.id %>">
+                <input type="text" name="name" value="<%= inst.name %>">
+                <button type="submit">Обновить</button>
+            </form>
+        </td>
+    </tr>
+    <% }); %>
+</table>
