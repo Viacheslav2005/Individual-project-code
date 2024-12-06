@@ -5,12 +5,12 @@ const router = express.Router(); // Используйте Router вместо a
 
 // Для профиля пользователя
 router.get('/profile', isAuthenticated, (req, res) => {
-    res.render('pages/profile', { user: req.session.user });
+    res.render('pages/profile', { title: 'Профиль', user: req.session.user });
 });
 
 // Для админ панели
 router.get('/admin', isAuthenticated, isAdmin, (req, res) => {
-    res.render('pages/admin', { user: req.session.user });
+    res.render('pages/admin', { title: 'Админ панель', user: req.session.user });
 });
 
 // Обработка маршрутов для регистрации

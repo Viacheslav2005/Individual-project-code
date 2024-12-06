@@ -6,10 +6,14 @@ const router = express.Router();
 // Главная страница
 router.get('/', async (req, res) => {
     const institutions = await Institution.getAll();
-    res.render('pages/index', { institutions });
+    res.render('pages/index', { institutions, user: req.session.user });
 });
 router.get('/calatog', async (req, res) => {
-    res.render('pages/calatog');
+    const institution = await Institution.getAll(req.params.id);
+    if (!institution) {
+        return res.status(404).send('Institution not found');
+    }
+    res.render('pages/calatog', { institution });
 });
 // Страница заведения
 router.get('/institution/:id', async (req, res) => {

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><%= title || 'Мое приложение' %></title>
+    <title><%= 'Мое приложение' %></title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <!-- Подключаем header -->
-    <%- include('../partials/header', { user: user }) %>
+    <!-- Общий header -->
+    <%- include('../partials/header') %>
 
     <!-- Основной контент -->
     <main>
-        <%- body %>
+        <%- body %> <!-- Здесь рендерится контент страницы -->
     </main>
 
-    <!-- Подключаем footer -->
+    <!-- Общий footer -->
     <%- include('../partials/footer') %>
 </body>
 </html>

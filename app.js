@@ -4,9 +4,14 @@ const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
+const apiRoutes = require('./routes/api');
+const mapRoutes = require('./routes/map'); // Подключение маршрутов карты
 require('dotenv').config();
 
 const app = express();
+
+app.use('/api', apiRoutes);
+app.use('/', mapRoutes); // Подключаем маршруты карты с корневым префиксом
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
