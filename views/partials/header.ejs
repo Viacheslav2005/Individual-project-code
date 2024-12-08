@@ -4,8 +4,8 @@
             <li><a href="/">Главная</a></li>
             <li><a href="/map">Карта</a></li>
             <% if (!user) { %>
-                <li><a href="/auth/login">Вход</a></li>
-                <li><a href="/auth/register">Регистрация</a></li>
+                <li><a href="/login">Вход</a></li>
+                <li><a href="/register">Регистрация</a></li>
             <% } else { %>
                 <li><a href="/profile">Профиль</a></li>
                 <% if (user.role === 'admin') { %>

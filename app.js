@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
+const locationsRoutes = require('./routes/locations');
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 const apiRoutes = require('./routes/api');
@@ -17,6 +18,8 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(expressLayouts);
 app.set('layout', 'layouts/main');
+
+app.use('/locations', locationsRoutes);
 
 // Парсинг данных
 app.use(bodyParser.urlencoded({ extended: false }));

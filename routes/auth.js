@@ -63,4 +63,12 @@ router.get('/logout', (req, res) => {
     });
 });
 
+router.get('/check', (req, res) => {
+    if (req.session.user) {
+        res.status(200).json({ authenticated: true });
+    } else {
+        res.status(401).json({ authenticated: false });
+    }
+});
+
 module.exports = router;
