@@ -1,8 +1,11 @@
-<script>
-    const user = <%= JSON.stringify(user || null) %>;
-</script>
-<script src="/js/index.js" defer></script>
-    <h1>Список учебных заведений</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Управление заведениями</title>
+    <script src="/js/institutions.js" defer></script>
+</head>
+<body>
+    <h1>Список заведений</h1>
 
     <!-- Форма поиска и фильтрации -->
     <form id="search-form">
@@ -18,15 +21,18 @@
 
     <!-- Список заведений -->
     <ul id="institutions-list">
-        <% institutions.forEach(inst => { %>
+        <% institutions.forEach(institution => { %>
             <li>
-                <a href="/institution/<%= inst.id %>"><%= inst.name %></a>
-                <p><%= inst.description || 'Описание отсутствует' %></p>
-                <% if (user) { %>
-                    <button class="favorite-btn" data-id="<%= inst.id %>">Добавить в избранное</button>
-                <% } %>
+                <strong><%= institution.name %></strong>
+                <p><%= institution.description || 'Описание отсутствует.' %></p>
+                <!-- Форма удаления -->
+                <form action="/admin/institutions/delete/<%= institution.id %>" method="POST" style="display: inline;">
+                    <button type="submit">Удалить</button>
+                </form>
+                <!-- Ссылка на страницу редактирования -->
+                <a href="/admin/institutions/edit/<%= institution.id %>">Редактировать</a>
             </li>
-        <% }); %>
+        <% }) %>
     </ul>
 
     <!-- Пагинация -->
@@ -36,7 +42,7 @@
                 <li><a href="#" data-page="<%= currentPage - 1 %>">Предыдущая</a></li>
             <% } %>
             <% for (let i = 1; i <= totalPages; i++) { %>
-                <li>
+                <li style="display: inline;">
                     <% if (i === currentPage) { %>
                         <strong><%= i %></strong>
                     <% } else { %>
@@ -49,3 +55,5 @@
             <% } %>
         </ul>
     </nav>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= title %></title>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=a6fb2199-c86a-4324-a83d-2a2786a01db6&lang=ru_RU"></script>
+    <script src="/js/yandex-map-v2.js" defer></script>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Создать новое заведение</h1>
+    <form id="create-institution-form" action="/admin/create-institution" method="POST">
+        <div>
+            <label for="name">Название:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="description">Описание:</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+        <div>
+            <label for="type">Тип:</label>
+            <select id="type" name="type" required>
+                <option value="" disabled selected>Выберите тип</option>
+                <option value="Школа">Школа</option>
+                <option value="Колледж">Колледж</option>
+                <option value="Университет">Университет</option>
+            </select>
+        </div>
+        <div>
+            <label for="rating">Рейтинг:</label>
+            <input type="number" id="rating" name="rating" min="0" max="5" step="0.1" required>
+        </div>
+        <div>
+            <label for="address">Адрес:</label>
+            <input type="text" id="address" name="address" required>
+        </div>
+        <div id="map" style="width: 100%; height: 600px; margin-top: 20px;"></div>
+        <input type="hidden" id="latitude" name="latitude" required>
+        <input type="hidden" id="longitude" name="longitude" required>
+        <button type="submit">Создать</button>
+    </form>
+</body>
+</html>

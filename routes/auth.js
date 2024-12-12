@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
         }
 
         await User.register({ username, email, password });
-        res.redirect('/auth/login'); // Перенаправление после успешной регистрации
+        res.redirect('/login'); // Перенаправление после успешной регистрации
     } catch (error) {
         console.error('Ошибка регистрации:', error);
         res.status(500).send('Ошибка регистрации');
@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
         };
 
         if (user.role === 'admin') {
-            return res.redirect('/admin');
+            return res.redirect('/auth/admin');
         } else {
             return res.redirect('/profile');
         }

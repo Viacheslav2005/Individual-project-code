@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Профиль</title>
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/index.js" defer></script>
 </head>
 <body>
-    <h1>Добро пожаловать, <%= user.username %></h1>
-    <p>Это ваша страница профиля.</p>
-    <a href="/auth/logout">Выйти</a>
+    <h1>Добро пожаловать, <%= user.username %>!</h1>
+
+    <h2>Ваши избранные заведения:</h2>
+    <% if (favorites.length > 0) { %>
+        <ul>
+            <% favorites.forEach(fav => { %>
+                <li>
+                    <h3><%= fav.name %></h3>
+                    <p><%= fav.description %></p>
+                    <form action="/favorites/remove" method="POST" style="display: inline;">
+                        <input type="hidden" name="institutionId" value="<%= fav.id %>">
+                        <button type="submit">Удалить из избранного</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>У вас нет избранных заведений.</p>
+    <% } %>
 </body>
 </html>

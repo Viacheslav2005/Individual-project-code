@@ -1,11 +1,6 @@
 const db = require('../config/db');
 
-const Institution = {
-    // Получить все заведения
-    getAll: async () => {
-        const [rows] = await db.query('SELECT * FROM educational_institutions');
-        return rows;
-    },
+const favorites = {
 
     // Получить заведение по ID
     getById: async (id) => {
@@ -101,38 +96,24 @@ const Institution = {
         const [rows] = await db.query('SELECT * FROM educational_institutions WHERE id = ?', [id]);
         return rows[0];
     },
-    
-
-    // Создать новое заведение
-    create: async ({ name, description, address, latitude, longitude, type, rating }) => {
+     // Получить избранные заведения пользователя
+     getFavoritesByUserId: async (userId) => {
         const query = `
-            INSERT INTO educational_institutions (name, description, address, latitude, longitude, type, rating) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            SELECT ei.* 
+            FROM favorites f
+            JOIN educational_institutions ei ON f.institution_id = ei.id
+            WHERE f.user_id = ?
         `;
-        const [result] = await db.query(query, [name, description, address, latitude, longitude, type, rating]);
-        return result.insertId;
+        const [rows] = await db.query(query, [userId]);
+        return rows;
     },
 
-    // Обновить данные заведения
-    update: async (id, { name, description, address, latitude, longitude, type, rating }) => {
-        const query = `
-            UPDATE educational_institutions 
-            SET name = ?, description = ?, type = ?, address = ?, latitude = ?, longitude = ?, rating = ?
-            WHERE id = ?
-        `;
-        const [result] = await db.query(query, [name, description, type, address, latitude, longitude, rating, id]);
-        return result.affectedRows; // Возвращаем количество изменённых записей
+    // Удалить заведение из избранного
+    removeFromFavorites: async (userId, institutionId) => {
+        const query = `DELETE FROM favorites WHERE user_id = ? AND institution_id = ?`;
+        const [result] = await db.query(query, [userId, institutionId]);
+        return result.affectedRows;
     },
+}
 
-    // Удалить заведение
-    delete: async (id) => {
-        const query = `DELETE FROM educational_institutions WHERE id = ?`;
-        const [result] = await db.query(query, [id]);
-        return result.affectedRows; // Возвращаем количество удалённых записей
-    },
-
-
-   
-};
-
-module.exports = Institution;
+module.exports = favorites;

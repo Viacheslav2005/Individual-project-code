@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             markers.push(marker);
         });
     }
-
+    
     async function openModal(id) {
         if (!id) {
             console.error('Ошибка: ID не передан в openModal!');
@@ -138,135 +138,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             const location = await response.json();
-            console.log('Данные заведения:', location); // Убедитесь, что данные приходят
+            console.log('Данные заведения:', location);
     
             // Обновляем данные в модальном окне
             document.getElementById('modal-title').textContent = location.name || 'Название отсутствует';
             document.getElementById('modal-description').textContent = location.description || 'Описание отсутствует.';
             document.getElementById('modal-address').textContent = location.address || 'Адрес не указан.';
+    
+            // Проверяем авторизацию
+            const authResponse = await fetch('/auth/check');
+            const isAuthenticated = authResponse.ok;
+    
+            const favoritesButton = document.getElementById('add-to-favorites');
+            if (isAuthenticated) {
+                favoritesButton.style.display = 'inline-block'; // Показываем кнопку
+                favoritesButton.onclick = async () => {
+                    try {
+                        const favResponse = await fetch('/locations/favorite', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ locationId: id }),
+                        });
+                        
+                        if (!favResponse.ok) {
+                            const errorText = await favResponse.text(); // Прочитайте тело ответа как текст
+                            console.error('Ошибка сервера:', errorText);
+                            alert('Произошла ошибка при добавлении в избранное.');
+                            return;
+                        }
+                        
+                        const result = await favResponse.json();
+                        alert(result.message);
+                        if (favResponse.ok) {
+                            alert(result.message);
+                        } else {
+                            alert(result.error || 'Не удалось добавить в избранное.');
+                        }
+                    } catch (error) {
+                        console.error('Ошибка добавления в избранное:', error);
+                    }
+                };
+            } else {
+                favoritesButton.style.display = 'none'; // Скрываем кнопку
+            }
+    
+            // Показываем модальное окно
             document.getElementById('modal').style.display = 'block';
         } catch (error) {
             console.error('Ошибка загрузки информации об организации:', error);
         }
     }
-
-    // async function openModal(id) {
-    //     if (!id) {
-    //         console.error('Ошибка: ID не передан в openModal!');
-    //         return;
-    //     }
-    
-    //     try {
-    //         const response = await fetch(`/api/location/${id}`);
-    //         if (!response.ok) {
-    //             console.error(`Ошибка загрузки данных: ${response.status}`);
-    //             alert('Не удалось загрузить данные заведения.');
-    //             return;
-    //         }
-    //         const location = await response.json();
-    //         console.log('Данные заведения:', location);
-    
-    //         // Обновляем данные в модальном окне
-    //         document.getElementById('modal-title').textContent = location.name || 'Название отсутствует';
-    //         document.getElementById('modal-description').textContent = location.description || 'Описание отсутствует.';
-    //         document.getElementById('modal-address').textContent = location.address || 'Адрес не указан.';
-    
-    //         // Проверяем авторизацию
-    //         const authResponse = await fetch('/auth/check');
-    //         const isAuthenticated = authResponse.ok;
-    
-    //         const favoritesButton = document.getElementById('add-to-favorites');
-    //         if (isAuthenticated) {
-    //             favoritesButton.style.display = 'inline-block'; // Показываем кнопку
-    //             favoritesButton.onclick = async () => {
-    //                 try {
-    //                     const favResponse = await fetch('/favorites/add', {
-    //                         method: 'POST',
-    //                         headers: {
-    //                             'Content-Type': 'application/json',
-    //                         },
-    //                         body: JSON.stringify({ locationId: id }),
-    //                     });
-    
-    //                     const result = await favResponse.json();
-    //                     if (favResponse.ok) {
-    //                         alert(result.message);
-    //                     } else {
-    //                         alert(result.error || 'Не удалось добавить в избранное.');
-    //                     }
-    //                 } catch (error) {
-    //                     console.error('Ошибка добавления в избранное:', error);
-    //                 }
-    //             };
-    //         } else {
-    //             favoritesButton.style.display = 'none'; // Скрываем кнопку
-    //         }
-    
-    //         // Показываем модальное окно
-    //         document.getElementById('modal').style.display = 'block';
-    //     } catch (error) {
-    //         console.error('Ошибка загрузки информации об организации:', error);
-    //     }
-    // }
-    
-    // async function openModal(id) {
-    //     if (!id) {
-    //         console.error('Ошибка: ID не передан в openModal!');
-    //         return;
-    //     }
-    
-    //     try {
-    //         const response = await fetch(`/api/location/${id}`);
-    //         if (!response.ok) {
-    //             console.error(`Ошибка загрузки данных: ${response.status}`);
-    //             alert('Не удалось загрузить данные заведения.');
-    //             return;
-    //         }
-    //         const location = await response.json();
-    //         console.log('Данные заведения:', location);
-    
-    //         // Обновляем данные в модальном окне
-    //         document.getElementById('modal-title').textContent = location.name || 'Название отсутствует';
-    //         document.getElementById('modal-description').textContent = location.description || 'Описание отсутствует.';
-    //         document.getElementById('modal-address').textContent = location.address || 'Адрес не указан.';
-    
-    //         // Проверяем авторизацию
-    //         const authResponse = await fetch('/auth/check');
-    //         const isAuthenticated = authResponse.ok;
-    
-    //         const favoritesButton = document.getElementById('add-to-favorites');
-    //         if (isAuthenticated) {
-    //             favoritesButton.style.display = 'inline-block'; // Показываем кнопку
-    //             favoritesButton.onclick = async () => {
-    //                 try {
-    //                     const favResponse = await fetch('/locations/favorite', {
-    //                         method: 'POST',
-    //                         headers: {
-    //                             'Content-Type': 'application/json',
-    //                         },
-    //                         body: JSON.stringify({ locationId: id }), // Убедитесь, что id передается корректно
-    //                     });
-    
-    //                     const result = await favResponse.json();
-    //                     if (favResponse.ok) {
-    //                         alert(result.message);
-    //                     } else {
-    //                         alert(result.error || 'Не удалось добавить в избранное.');
-    //                     }
-    //                 } catch (error) {
-    //                     console.error('Ошибка добавления в избранное:', error);
-    //                 }
-    //             };
-    //         } else {
-    //             favoritesButton.style.display = 'none'; // Скрываем кнопку
-    //         }
-    
-    //         // Показываем модальное окно
-    //         document.getElementById('modal').style.display = 'block';
-    //     } catch (error) {
-    //         console.error('Ошибка загрузки информации об организации:', error);
-    //     }
-    // }
     
 
 
