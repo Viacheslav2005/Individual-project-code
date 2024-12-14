@@ -4,35 +4,51 @@
     <title>Редактирование заведения</title>
 </head>
 <body>
-    <h1>Редактирование заведения</h1>
-    <form action="/admin/institutions/edit/<%= institution.id %>" method="POST">
-        <label for="name">Название:</label>
-        <input type="text" id="name" name="name" value="<%= institution.name %>" required>
-        
-        <label for="description">Описание:</label>
-        <textarea id="description" name="description" rows="4"><%= institution.description || '' %></textarea>
-        
-        <label for="address">Адрес:</label>
-        <input type="text" id="address" name="address" value="<%= institution.address %>" required>
-        
-        <label for="latitude">Широта:</label>
-        <input type="text" id="latitude" name="latitude" value="<%= institution.latitude %>" required>
-        
-        <label for="longitude">Долгота:</label>
-        <input type="text" id="longitude" name="longitude" value="<%= institution.longitude %>" required>
-        
-        <label for="type">Тип:</label>
-        <select id="type" name="type">
-            <option value="Школа" <% if (institution.type === 'Школа') { %>selected<% } %>>Школа</option>
-            <option value="Колледж" <% if (institution.type === 'Колледж') { %>selected<% } %>>Колледж</option>
-            <option value="Университет" <% if (institution.type === 'Университет') { %>selected<% } %>>Университет</option>
-        </select>
-        
-        <label for="rating">Рейтинг:</label>
-        <input type="number" id="rating" name="rating" value="<%= institution.rating || 0 %>" min="0" max="5" step="0.1" required>
-        
-        <button type="submit">Сохранить изменения</button>
-    </form>
-    <a href="/admin/institutions">Отмена</a>
+    <div class="container mt-5">
+        <h1 class="display-4 mb-4">Редактирование заведения</h1>
+        <form action="/admin/institutions/edit/<%= institution.id %>" method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Название:</label>
+                <input type="text" id="name" name="name" value="<%= institution.name %>" required class="form-control">
+            </div>
+            
+            <div class="mb-3">
+                <label for="description" class="form-label">Описание:</label>
+                <textarea id="description" name="description" rows="4" class="form-control"><%= institution.description || '' %></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="address" class="form-label">Адрес:</label>
+                <input type="text" id="address" name="address" value="<%= institution.address %>" required class="form-control">
+            </div>
+            
+            <div class="mb-3">
+                <label for="latitude" class="form-label">Широта:</label>
+                <input type="text" id="latitude" name="latitude" value="<%= institution.latitude %>" required class="form-control">
+            </div>
+            
+            <div class="mb-3">
+                <label for="longitude" class="form-label">Долгота:</label>
+                <input type="text" id="longitude" name="longitude" value="<%= institution.longitude %>" required class="form-control">
+            </div>
+            
+            <div class="mb-3">
+                <label for="type" class="form-label">Тип:</label>
+                <select id="type" name="type" class="form-select">
+                    <option value="Школа" <% if (institution.type === 'Школа') { %>selected<% } %>>Школа</option>
+                    <option value="Колледж" <% if (institution.type === 'Колледж') { %>selected<% } %>>Колледж</option>
+                    <option value="Университет" <% if (institution.type === 'Университет') { %>selected<% } %>>Университет</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="rating" class="form-label">Рейтинг:</label>
+                <input type="number" id="rating" name="rating" value="<%= institution.rating || 0 %>" min="0" max="5" step="0.1" required class="form-control">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        </form>
+        <a href="/admin/institutions" class="btn btn-secondary mt-3">Отмена</a>
+    </div>
 </body>
 </html>

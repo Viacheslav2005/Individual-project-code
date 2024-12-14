@@ -1,0 +1,37 @@
+<body>
+  <h1>Отзывы</h1>
+
+  <!-- Секция для отображения отзывов -->
+  <div id="reviews">
+    <% if (reviews && reviews.length > 0) { %>
+      <% reviews.forEach(review => { %>
+        <div class="review">
+          <p><strong>Пользователь:</strong> <%= review.user_name || 'Аноним' %></p>
+          <p><strong>Оценка:</strong> <%= review.rating %></p>
+          <p><strong>Отзыв:</strong> <%= review.content %></p>
+          <hr>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>Отзывов пока нет. Будьте первым, кто оставит отзыв!</p>
+    <% } %>
+  </div>
+
+  <% if (user) { %>
+    <h2>Добавить отзыв</h2>
+    <form id="review-form" method="POST" action="/reviews/add">
+      <input type="hidden" name="institution_id" value="<%= institution.id %>">
+      <div class="form-group">
+          <label for="content">Ваш отзыв:</label>
+          <textarea id="content" name="content" class="form-control" required></textarea>
+      </div>
+      <div class="form-group">
+          <label for="rating">Оценка (1-5):</label>
+          <input type="number" id="rating" name="rating" min="1" max="5" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Добавить отзыв</button>
+    </form>
+  <% } else { %>
+    <p>Чтобы оставить отзыв, пожалуйста, <a href="/login">войдите</a>.</p>
+  <% } %>
+</body>

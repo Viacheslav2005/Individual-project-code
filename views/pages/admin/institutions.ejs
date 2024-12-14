@@ -5,55 +5,56 @@
     <script src="/js/institutions.js" defer></script>
 </head>
 <body>
-    <h1>Список заведений</h1>
+    <div class="container mt-5">
+        <h1 class="display-4 mb-4">Список заведений</h1>
 
-    <!-- Форма поиска и фильтрации -->
-    <form id="search-form">
-        <input type="text" id="search-box" placeholder="Введите название" value="<%= search || '' %>">
-        <select id="filter-select">
-            <option value="">Все типы</option>
-            <option value="Школа" <% if (filter === 'Школа') { %>selected<% } %>>Школа</option>
-            <option value="Колледж" <% if (filter === 'Колледж') { %>selected<% } %>>Колледж</option>
-            <option value="Университет" <% if (filter === 'Университет') { %>selected<% } %>>Университет</option>
-        </select>
-        <button type="submit">Поиск</button>
-    </form>
+        <!-- Форма поиска и фильтрации -->
+        <form id="search-form" class="mb-3">
+            <div class="input-group mb-3">
+                <input type="text" id="search-box" class="form-control" placeholder="Введите название" value="<%= search || '' %>">
+                <select id="filter-select" class="form-select ms-2">
+                    <option value="">Все типы</option>
+                    <option value="Школа" <% if (filter === 'Школа') { %>selected<% } %>>Школа</option>
+                    <option value="Колледж" <% if (filter === 'Колледж') { %>selected<% } %>>Колледж</option>
+                    <option value="Университет" <% if (filter === 'Университет') { %>selected<% } %>>Университет</option>
+                </select>
+                <button type="submit" class="btn btn-outline-secondary">Поиск</button>
+            </div>
+        </form>
 
-    <!-- Список заведений -->
-    <ul id="institutions-list">
-        <% institutions.forEach(institution => { %>
-            <li>
-                <strong><%= institution.name %></strong>
-                <p><%= institution.description || 'Описание отсутствует.' %></p>
-                <!-- Форма удаления -->
-                <form action="/admin/institutions/delete/<%= institution.id %>" method="POST" style="display: inline;">
-                    <button type="submit">Удалить</button>
-                </form>
-                <!-- Ссылка на страницу редактирования -->
-                <a href="/admin/institutions/edit/<%= institution.id %>">Редактировать</a>
-            </li>
-        <% }) %>
-    </ul>
-
-    <!-- Пагинация -->
-    <nav id="pagination">
-        <ul style="list-style: none; display: flex; gap: 10px;">
-            <% if (currentPage > 1) { %>
-                <li><a href="#" data-page="<%= currentPage - 1 %>">Предыдущая</a></li>
-            <% } %>
-            <% for (let i = 1; i <= totalPages; i++) { %>
-                <li style="display: inline;">
-                    <% if (i === currentPage) { %>
-                        <strong><%= i %></strong>
-                    <% } else { %>
-                        <a href="#" data-page="<%= i %>"><%= i %></a>
-                    <% } %>
+        <!-- Список заведений -->
+        <ul id="institutions-list" class="list-group">
+            <% institutions.forEach(institution => { %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong><%= institution.name %></strong>
+                        <p><%= institution.description || 'Описание отсутствует.' %></p>
+                    </div>
+                    <!-- Форма удаления -->
+                    <div>
+                        <form action="/admin/institutions/delete/<%= institution.id %>" method="POST">
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
+                        <!-- Ссылка на страницу редактирования -->
+                        <a href="/admin/institutions/edit/<%= institution.id %>" class="btn btn-secondary">Редактировать</a>
+                    </div>
                 </li>
-            <% } %>
-            <% if (currentPage < totalPages) { %>
-                <li><a href="#" data-page="<%= currentPage + 1 %>">Следующая</a></li>
-            <% } %>
+            <% }) %>
         </ul>
-    </nav>
+
+        <!-- Пагинация -->
+            <ul id="pagination" class="pagination justify-content-center">
+                <% if (currentPage > 1) { %>
+                    <li class="page-item"><a class="page-link" href="#" data-page="<%= currentPage - 1 %>">Предыдущая</a></li>
+                <% } %>
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <li class="page-item"><a class="page-link" href="#" data-page="<%= i %>"><%= i %></a></li>
+                <% } %>
+                <% if (currentPage < totalPages) { %>
+                    <li class="page-item"><a class="page-link" href="#" data-page="<%= currentPage + 1 %>">Следующая</a></li>
+                <% } %>
+            </ul>
+    </div>
 </body>
+
 </html>

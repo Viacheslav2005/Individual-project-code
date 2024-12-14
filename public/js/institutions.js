@@ -24,28 +24,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateUI(data) {
         // Обновление списка заведений
         institutionsList.innerHTML = data.institutions.map(institution => `
-            <li>
-                <strong>${institution.name}</strong>
-                <p>${institution.description || 'Описание отсутствует.'}</p>
-                <form action="/admin/institutions/delete/${institution.id}" method="POST">
-                    <button type="submit">Удалить</button>
-                </form>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>${institution.name}</strong>
+                    <p>${institution.description || 'Описание отсутствует.'}</p>
+                </div>
+                <div>
+                     <form action="/admin/institutions/delete/${institution.id}" method="POST">
+                         <button type="submit" class="btn btn-danger">Удалить</button>
+                     </form>
+                     <!-- Ссылка на страницу редактирования -->
+                     <a href="/admin/institutions/edit/${institution.id}" class="btn btn-secondary">Редактировать</a>
+                </div>
             </li>
         `).join('');
 
         // Обновление пагинации
         pagination.innerHTML = `
             ${data.currentPage > 1
-                ? `<li><a href="#" data-page="${data.currentPage - 1}">Предыдущая</a></li>` : ''}
+                ? `<li class="page-item"><a href="#" class="page-link" data-page="${data.currentPage - 1}">Предыдущая</a></li>` : ''}
             ${Array.from({ length: data.totalPages }, (_, i) => i + 1).map(page => `
-                <li>
+                <li class="page-item">
                     ${page === data.currentPage
-                        ? `<strong>${page}</strong>`
-                        : `<a href="#" data-page="${page}">${page}</a>`}
+                        ? `<strong><a href="#" class="page-link" data-page="${page}">${page}</a></strong>`
+                        : `<a href="#" class="page-link" data-page="${page}">${page}</a>`}
                 </li>
             `).join('')}
             ${data.currentPage < data.totalPages
-                ? `<li><a href="#" data-page="${data.currentPage + 1}">Следующая</a></li>` : ''}
+                ? `<li class="page-item"><a href="#" class="page-link" data-page="${data.currentPage + 1}">Следующая</a></li>` : ''}
         `;
     }
 

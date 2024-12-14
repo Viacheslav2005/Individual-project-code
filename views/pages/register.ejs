@@ -1,23 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Регистрация</title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
 <body>
-    <h1>Регистрация</h1>
-    <form action="/auth/register" method="POST">
-        <label for="username">Имя пользователя:</label>
-        <input type="text" id="username" name="username" required>
-    
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-    
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" name="password" required>
-    
-        <button type="submit">Зарегистрироваться</button>
-    </form>
-    <p>Уже есть аккаунт? <a href="login">Войти</a></p>
+    <div class="container mt-5">
+        <h1 class="display-4 mb-4">Регистрация</h1>
+        <form action="/auth/register" method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">Имя пользователя:</label>
+                <input type="text" id="username" name="username" required class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" name="email" required class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Пароль:</label>
+                <input type="password" id="password" name="password" required class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Зарегистрироваться</button>
+        </form>
+    </div>
+    <p class="mt-4">Уже есть аккаунт? <a href="login" class="text-decoration-none">Войти</a></p>
 </body>
-</html>
+

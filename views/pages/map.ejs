@@ -9,6 +9,17 @@
 <body>
     <h1>Карта учебных заведений</h1>
 
+    <form id="filter-form">
+        <label for="type">Тип заведения:</label>
+        <select id="type" name="type">
+            <option value="">Все</option>
+            <option value="school">Школа</option>
+            <option value="college">Колледж</option>
+            <option value="university">Университет</option>
+        </select>
+        <button type="submit">Применить фильтр</button>
+    </form>
+    
     <!-- Форма для поиска -->
     <div>
         <form id="search-form">

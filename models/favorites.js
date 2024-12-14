@@ -114,6 +114,26 @@ const favorites = {
         const [result] = await db.query(query, [userId, institutionId]);
         return result.affectedRows;
     },
+
+    // Найти избранное заведение для пользователя
+    findOne: async (userId, institutionId) => {
+        const query = `
+            SELECT * 
+            FROM favorites
+            WHERE user_id = ? AND institution_id = ?
+        `;
+        console.log('Executing Query:', query, 'Params:', userId, institutionId);
+        const [rows] = await db.query(query, [userId, institutionId]);
+        return rows[0] || null;
+    },
+
+    // Добавить заведение в избранное
+    addToFavorites: async (userId, institutionId) => {
+        console.log(userId, institutionId)
+        const query = `INSERT INTO favorites (user_id, institution_id) VALUES (?, ?)`;
+        const [result] = await db.query(query, [userId, institutionId]);
+        return result.insertId; // Вернёт ID добавленной записи
+    },
 }
 
 module.exports = favorites;

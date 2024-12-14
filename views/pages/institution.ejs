@@ -3,12 +3,20 @@
 <head>
     <title><%= institution.name %></title>
 </head>
-<body>
-    <h1><%= institution.name %></h1>
-    <p><%= institution.description %></p>
-    <p>Тип: <%= institution.type %></p>
-    <p>Адрес: <%= institution.address %></p>
-    <p>Рейтинг: <%= institution.rating %></p>
-    <a href="/">Назад</a>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="display-4 mb-3"><%= institution.name %></h1>
+        <p class="lead mb-4"><%= institution.description %></p>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Тип:</strong> <%= institution.type %></p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Адрес:</strong> <%= institution.address %></p>
+            </div>
+        </div>
+        <p><strong>Рейтинг:</strong> <%= institution.rating %></p>
+    </div>
+    <a href="/" class="btn btn-primary mt-4">Назад</a>
 </body>
 </html>

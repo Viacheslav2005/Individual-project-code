@@ -66,7 +66,6 @@ app.use((req, res, next) => {
 app.use('/auth', authRoutes); // Маршруты авторизации
 app.use('/admin', adminRoutes); // Маршрут админа
 app.use('/', usersRoutes);    // Маршруты пользователя
-
 app.use('/locations', locationsRoutes); 
 
 

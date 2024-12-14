@@ -6,24 +6,30 @@
     <script src="/js/index.js" defer></script>
 </head>
 <body>
-    <h1>Добро пожаловать, <%= user.username %>!</h1>
+    <div class="container mt-5">
+        <h1 class="display-4 mb-3">Добро пожаловать, <%= user.username %>!</h1>
 
-    <h2>Ваши избранные заведения:</h2>
-    <% if (favorites.length > 0) { %>
-        <ul>
-            <% favorites.forEach(fav => { %>
-                <li>
-                    <h3><%= fav.name %></h3>
-                    <p><%= fav.description %></p>
-                    <form action="/favorites/remove" method="POST" style="display: inline;">
-                        <input type="hidden" name="institutionId" value="<%= fav.id %>">
-                        <button type="submit">Удалить из избранного</button>
-                    </form>
-                </li>
-            <% }) %>
-        </ul>
-    <% } else { %>
-        <p>У вас нет избранных заведений.</p>
-    <% } %>
+        <h2 class="mb-4">Ваши избранные заведения:</h2>
+        <% if (favorites.length > 0) { %>
+            <div class="row">
+                <% favorites.forEach(fav => { %>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title"><%= fav.name %></h3>
+                                <p class="card-text"><%= fav.description %></p>
+                                <form action="/favorites/remove" method="POST" class="d-inline">
+                                    <input type="hidden" name="institutionId" value="<%= fav.id %>">
+                                    <button type="submit" class="btn btn-danger">Удалить из избранного</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>У вас нет избранных заведений.</p>
+        <% } %>
+    </div>
 </body>
 </html>

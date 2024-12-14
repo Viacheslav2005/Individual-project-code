@@ -5,16 +5,23 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <h1>Вход</h1>
-    <form action="/auth/login" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" name="password" required>
-        
-        <button type="submit">Войти</button>
-    </form>
-    <p>Нет аккаунта? <a href="register">Зарегистрироваться</a></p>
+    <div class="container mt-5">
+        <h1 class="display-4 mb-4">Вход</h1>
+        <form action="/auth/login" method="POST">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" name="email" required class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Пароль:</label>
+                <input type="password" id="password" name="password" required class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Войти</button>
+        </form>
+    </div>
+    <p class="mt-4">Нет аккаунта? <a href="register" class="text-decoration-none">Зарегистрироваться</a></p>
 </body>
+
 </html>

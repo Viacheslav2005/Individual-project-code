@@ -1,51 +1,47 @@
 <script>
-    const user = <%= JSON.stringify(user || null) %>;
+    const user = <%- JSON.stringify(user || null) %>;
 </script>
 <script src="/js/index.js" defer></script>
-    <h1>Список учебных заведений</h1>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Список учебных заведений</h1>
 
-    <!-- Форма поиска и фильтрации -->
-    <form id="search-form">
-        <input type="text" id="search-box" placeholder="Введите название" value="<%= search || '' %>">
-        <select id="filter-select">
+    <form id="search-form" class="mb-4 d-flex">
+        <input type="text" id="search-box" class="form-control me-2" placeholder="Введите название" value="<%= search || '' %>">
+        <select id="filter-select" class="form-select me-2">
             <option value="">Все типы</option>
             <option value="Школа" <% if (filter === 'Школа') { %>selected<% } %>>Школа</option>
             <option value="Колледж" <% if (filter === 'Колледж') { %>selected<% } %>>Колледж</option>
             <option value="Университет" <% if (filter === 'Университет') { %>selected<% } %>>Университет</option>
         </select>
-        <button type="submit">Поиск</button>
+        <button type="submit" class="btn btn-primary">Поиск</button>
     </form>
 
-    <!-- Список заведений -->
-    <ul id="institutions-list">
+    <ul id="institutions-list" class="list-group">
         <% institutions.forEach(inst => { %>
-            <li>
-                <a href="/institution/<%= inst.id %>"><%= inst.name %></a>
+            <li class="list-group-item">
+                <a href="/institution/<%= inst.id %>" class="h5"><%= inst.name %></a>
                 <p><%= inst.description || 'Описание отсутствует' %></p>
                 <% if (user) { %>
-                    <button class="favorite-btn" data-id="<%= inst.id %>">Добавить в избранное</button>
+                    <button class="btn btn-primary favorite-btn" data-id="<%= inst.id %>">Добавить в избранное</button>
                 <% } %>
+                <a href="/reviews/<%= inst.id %>" class="btn btn-primary">Отзывы</a>
             </li>
         <% }); %>
     </ul>
 
-    <!-- Пагинация -->
-    <nav id="pagination">
-        <ul style="list-style: none; display: flex; gap: 10px;">
-            <% if (currentPage > 1) { %>
-                <li><a href="#" data-page="<%= currentPage - 1 %>">Предыдущая</a></li>
-            <% } %>
-            <% for (let i = 1; i <= totalPages; i++) { %>
-                <li>
-                    <% if (i === currentPage) { %>
-                        <strong><%= i %></strong>
-                    <% } else { %>
-                        <a href="#" data-page="<%= i %>"><%= i %></a>
-                    <% } %>
-                </li>
-            <% } %>
-            <% if (currentPage < totalPages) { %>
-                <li><a href="#" data-page="<%= currentPage + 1 %>">Следующая</a></li>
-            <% } %>
-        </ul>
-    </nav>
+    <!-- Pagination -->
+
+    <ul id="pagination" class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+    </ul>
+</div>
