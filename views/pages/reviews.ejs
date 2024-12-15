@@ -1,37 +1,42 @@
 <body>
-  <h1>Отзывы</h1>
+  <div class="container mt-4">
+      <h1 class="text-center mb-4">Отзывы</h1>
 
-  <!-- Секция для отображения отзывов -->
-  <div id="reviews">
-    <% if (reviews && reviews.length > 0) { %>
-      <% reviews.forEach(review => { %>
-        <div class="review">
-          <p><strong>Пользователь:</strong> <%= review.user_name || 'Аноним' %></p>
-          <p><strong>Оценка:</strong> <%= review.rating %></p>
-          <p><strong>Отзыв:</strong> <%= review.content %></p>
-          <hr>
-        </div>
-      <% }); %>
-    <% } else { %>
-      <p>Отзывов пока нет. Будьте первым, кто оставит отзыв!</p>
-    <% } %>
+      <!-- Секция для отображения отзывов -->
+      <div id="reviews">
+          <% if (reviews && reviews.length > 0) { %>
+              <% reviews.forEach(review => { %>
+                  <div class="card bg-light shadow-sm mb-4">
+                      <div class="card-body">
+                          <p><strong>Пользователь:</strong> <%= review.user_name || 'Аноним' %></p>
+                          <p><strong>Оценка:</strong> <%= review.rating %>/5</p>
+                          <p><strong>Отзыв:</strong> <%= review.content %></p>
+                      </div>
+                  </div>
+              <% }); %>
+          <% } else { %>
+              <div class="alert alert-info" role="alert">
+                  Отзывов пока нет. Будьте первым, кто оставит отзыв!
+              </div>
+          <% } %>
+      </div>
+
+      <% if (user) { %>
+          <h2 class="mb-3">Добавить отзыв</h2>
+          <form id="review-form" method="POST" action="/reviews/add" class="mb-4">
+              <input type="hidden" name="institution_id" value="<%= institution.id %>">
+              <div class="mb-3">
+                  <label for="content" class="form-label">Ваш отзыв:</label>
+                  <textarea id="content" name="content" class="form-control" required></textarea>
+              </div>
+              <div class="mb-3">
+                  <label for="rating" class="form-label">Оценка (1-5):</label>
+                  <input type="number" id="rating" name="rating" min="1" max="5" class="form-control" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Добавить отзыв</button>
+          </form>
+      <% } else { %>
+          <p>Чтобы оставить отзыв, пожалуйста, <a href="/login" class="text-decoration-none">войдите</a>.</p>
+      <% } %>
   </div>
-
-  <% if (user) { %>
-    <h2>Добавить отзыв</h2>
-    <form id="review-form" method="POST" action="/reviews/add">
-      <input type="hidden" name="institution_id" value="<%= institution.id %>">
-      <div class="form-group">
-          <label for="content">Ваш отзыв:</label>
-          <textarea id="content" name="content" class="form-control" required></textarea>
-      </div>
-      <div class="form-group">
-          <label for="rating">Оценка (1-5):</label>
-          <input type="number" id="rating" name="rating" min="1" max="5" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Добавить отзыв</button>
-    </form>
-  <% } else { %>
-    <p>Чтобы оставить отзыв, пожалуйста, <a href="/login">войдите</a>.</p>
-  <% } %>
 </body>
